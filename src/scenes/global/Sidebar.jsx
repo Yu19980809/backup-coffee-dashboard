@@ -34,6 +34,7 @@ const SideBar = () => {
         '& .ps-sidebar-root': { height: '100vh' },
         '& .ps-sidebar-container': { background: `${ colors.primary[400] } !important` },
         '& .ps-submenu-content': { background: `${ colors.primary[400] } !important` },
+        '& .ps-submenu-content .ps-menu-button': { paddingLeft: '65px !important' },
         '& .ps-menu-button': { padding: '5px 35px 5px 20px !important' },
         '& .ps-menu-button:hover': { color: '#868dfd !important', backgroundColor: 'transparent !important' },
         '& .ps-active': { color: '#6870fa !important' }
@@ -124,7 +125,6 @@ const SideBar = () => {
               <Item
                 title='团队管理'
                 to='/user/team'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -133,7 +133,6 @@ const SideBar = () => {
               <Item
                 title='用户管理'
                 to='/user/management'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -142,7 +141,6 @@ const SideBar = () => {
               <Item
                 title='用户分组'
                 to='/user/group'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -151,7 +149,6 @@ const SideBar = () => {
               <Item
                 title='用户统计'
                 to='/user/statistics'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -162,7 +159,6 @@ const SideBar = () => {
               <Item
                 title='订单管理'
                 to='/order/management'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -171,7 +167,6 @@ const SideBar = () => {
               <Item
                 title='订单统计'
                 to='/order/statistics'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -182,7 +177,6 @@ const SideBar = () => {
               <Item
                 title='商品管理'
                 to='/commodity/management'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -191,7 +185,6 @@ const SideBar = () => {
               <Item
                 title='商品分类'
                 to='/commodity/classification'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }
@@ -200,7 +193,6 @@ const SideBar = () => {
               <Item
                 title='商品统计'
                 to='/commodity/statistics'
-                icon={ <PersonOutlinedIcon /> }
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }

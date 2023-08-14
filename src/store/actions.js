@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { FETCH_MEMBERS, ADD_MEMBER, MODIFY_ROLE, DELETE_MEMBERS, FETCH_USERS, GIVE_VIP, FETCH_GROUPS, MODIFY_GROUP, ADD_GROUP } from '../constants/actionType'
+import { FETCH_MEMBERS, ADD_MEMBER, MODIFY_ROLE, DELETE_MEMBERS, FETCH_USERS, GIVE_VIP, FETCH_GROUPS, MODIFY_GROUP, ADD_GROUP, DELETE_GROUP, DELETE_GROUPS } from '../constants/actionType'
 
 // 成员管理
 const fetchMembers = () => async ( dispatch ) => {
@@ -103,6 +103,24 @@ const addGroup = params => async ( dispatch ) => {
   }
 }
 
+const deleteSingleGroup = id => async ( dispatch ) => {
+  try {
+    await api.deleteSingleGroup( id )
+    dispatch( { type: DELETE_GROUP, payload: id } )
+  } catch (error) {
+    console.log( 'deleteSingleGroup error', error )
+  }
+}
+
+const deleteGroups = idList => async ( dispatch ) => {
+  try {
+    await api.deleteGroups( idList )
+    dispatch( { type: DELETE_GROUPS, payload: idList } )
+  } catch (error) {
+    console.log( 'deleteGroups error', error )
+  }
+}
+
 export {
   fetchMembers,
   addMember,
@@ -114,4 +132,6 @@ export {
   setUserGroup,
   modifyGroup,
   addGroup,
+  deleteSingleGroup,
+  deleteGroups,
 }

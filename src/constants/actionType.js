@@ -13,3 +13,5 @@ export const SET_GROUP = 'SET_GROUP'
 // 用户分组
 export const MODIFY_GROUP = 'MODIFY_GROUP'
 export const ADD_GROUP = 'ADD_GROUP'
+export const DELETE_GROUP = 'DELETE_GROUP'
+export const DELETE_GROUPS = 'DELETE_GROUPS'

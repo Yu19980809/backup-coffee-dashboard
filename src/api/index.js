@@ -26,6 +26,8 @@ const setUserGroup = data => API.post( '/user_group/web', data )
 // 用户分组
 const modifyGroup = data => API.patch( '/group/web', data )
 const addGroup = data => API.post( '/group/web', data )
+const deleteSingleGroup = id => API.delete( `/group/web/single/${ id }` )
+const deleteGroups = idList => API.delete( '/group/web', { params: { idList } } )
 
 export {
   fetchMembers,
@@ -38,4 +40,6 @@ export {
   setUserGroup,
   modifyGroup,
   addGroup,
+  deleteSingleGroup,
+  deleteGroups,
 }

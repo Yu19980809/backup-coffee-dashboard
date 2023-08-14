@@ -5,7 +5,7 @@ import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFi
 import toast from 'react-hot-toast'
 import { Header, CustomButton } from '../../components'
 import { tokens } from '../../theme'
-import { fetchUserGroups, modifyGroup, addGroup } from '../../store/actions'
+import { fetchUserGroups, modifyGroup, addGroup, deleteSingleGroup, deleteGroups } from '../../store/actions'
 
 const UserGroup = () => {
   const dispatch = useDispatch()
@@ -57,6 +57,35 @@ const UserGroup = () => {
       } )
   }
 
+  // 删除（单个）分组相关参数
+  const [ deleteSingleGroupOpen, setDeleteSingleGroupOpen ] = useState( false )
+
+  // 删除（单个）分组
+  const handleDeleteSingleGroup = () => {
+    dispatch( deleteSingleGroup( clickedRow._id ) )
+      .then( () => {
+        const newGroups = groups.filter( item => item._id !== clickedRow._id )
+        setGroups( newGroups )
+        setDeleteSingleGroupOpen( false )
+        toast.success( '删除成功' )
+      } )
+  }
+
+  // 批量删除相关参数
+  const [ deleteGroupsOpen, setDeleteGroupsOpen ] = useState( false )
+
+  // 批量删除
+  const handleDeleteGroups = () => {
+    dispatch( deleteGroups( selectedRows ) )
+      .then( () => {
+        const newGroups = groups.filter( item => !selectedRows.includes( item._id ) )
+        setGroups( newGroups )
+        setDeleteGroupsOpen( false )
+        setSelectedRows( [] )
+        toast.success( '删除成功' )
+      } )
+  }
+
   // 表格相关参数
   const columns = [
     { field: 'name', headerName: '分组名称', flex: 1, cellClassName: 'name-column--cell' },
@@ -73,7 +102,7 @@ const UserGroup = () => {
           p='5px'
         >
           <CustomButton colors={ colors } text='修改' handleClick={ () => setModifyGroupOpen( true ) } />
-          <CustomButton colors={ colors } text='删除' />
+          <CustomButton colors={ colors } text='删除' handleClick={ () => setDeleteSingleGroupOpen( true ) } />
         </Box>
       )
     }
@@ -98,7 +127,7 @@ const UserGroup = () => {
   
       <Box display='flex' gap='10px'>
         <CustomButton colors={ colors } text='添加分组' handleClick={ () => setAddGroupOpen( true ) } />
-        <CustomButton colors={ colors } text='批量删除分组' />
+        <CustomButton colors={ colors } text='批量删除分组' handleClick={ () => !selectedRows.length ? toast.error( '请选择要删除的分组' ) : setDeleteGroupsOpen( true ) } />
       </Box>
     </GridToolbarContainer>
   )
@@ -254,6 +283,118 @@ const UserGroup = () => {
                 variant='contained'
                 color='secondary'
                 onClick={ handleAddGroup }
+              >
+                确认
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* DELETE SINGLE GROUP MODAL */}
+      <Modal
+        open={ deleteSingleGroupOpen }
+        onClose={ () => setDeleteSingleGroupOpen( false ) }
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            p: 4,
+            bgcolor: colors.primary[400],
+            border: '2px solid #000',
+            borderRadius: '10px',
+            boxShadow: 24,
+          }}
+        >
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ marginBottom: '10px', textAlign: 'center' }}
+          >
+            删除提示
+          </Typography>
+
+          <Box id='modal-modal-description'>
+            <Typography sx={{ textAlign: 'center' }}>确认删除该分组吗？</Typography>
+
+            <Box display='flex' justifyContent='center' gap='20px' mt='20px'>
+              <Button
+                type='button'
+                variant='contained'
+                color='primary'
+                onClick={ () => setDeleteSingleGroupOpen( false ) }
+              >
+                取消
+              </Button>
+
+              <Button
+                type='button'
+                variant='contained'
+                color='secondary'
+                onClick={ handleDeleteSingleGroup }
+              >
+                确认
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* DELETE GROUPS MODAL */}
+      <Modal
+        open={ deleteGroupsOpen }
+        onClose={ () => setDeleteGroupsOpen( false ) }
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            p: 4,
+            bgcolor: colors.primary[400],
+            border: '2px solid #000',
+            borderRadius: '10px',
+            boxShadow: 24,
+          }}
+        >
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ marginBottom: '10px', textAlign: 'center' }}
+          >
+            删除提示
+          </Typography>
+
+          <Box id='modal-modal-description'>
+            <Typography sx={{ textAlign: 'center' }}>确认删除选中的所有分组吗？</Typography>
+
+            <Box display='flex' justifyContent='center' gap='20px' mt='20px'>
+              <Button
+                type='button'
+                variant='contained'
+                color='primary'
+                onClick={ () => setDeleteGroupsOpen( false ) }
+              >
+                取消
+              </Button>
+
+              <Button
+                type='button'
+                variant='contained'
+                color='secondary'
+                onClick={ handleDeleteGroups }
               >
                 确认
               </Button>

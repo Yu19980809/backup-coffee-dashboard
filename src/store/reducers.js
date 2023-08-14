@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { combineReducers } from '@reduxjs/toolkit'
-import { FETCH_MEMBERS, ADD_MEMBER, MODIFY_ROLE, DELETE_MEMBERS, FETCH_USERS, GIVE_VIP, FETCH_GROUPS } from '../constants/actionType'
+import { FETCH_MEMBERS, ADD_MEMBER, MODIFY_ROLE, DELETE_MEMBERS, FETCH_USERS, GIVE_VIP, FETCH_GROUPS, MODIFY_GROUP, DELETE_GROUP, DELETE_GROUPS } from '../constants/actionType'
 
 const memberRudecer = ( members = [], action ) => {
   switch ( action.type ) {
@@ -45,6 +45,18 @@ const groupReducer = ( groups = [], action ) => {
   switch ( action.type ) {
     case FETCH_GROUPS:
       groups = action.payload
+      return groups
+
+    case MODIFY_GROUP:
+      groups = groups.map( item => item === action.payload._id ? action.payload : item )
+      return groups
+
+    case DELETE_GROUP:
+      groups = groups.filter( item => item._id !== action.payload )
+      return groups
+    
+    case DELETE_GROUPS:
+      groups = groups.filter( item => !action.payload.includes( item._id ) )
       return groups
 
     default:
