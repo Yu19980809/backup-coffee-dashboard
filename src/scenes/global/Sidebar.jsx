@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined'
 import LocalCafeOutlinedIcon from '@mui/icons-material/LocalCafeOutlined'
 import { tokens } from '../../theme'
-import { logo, user } from '../../assets/images'
+import { avatar } from '../../assets/images'
 
 const Item = ( { colors, title, to, icon, selected, setSelected } ) => (
   <MenuItem
@@ -25,6 +25,11 @@ const Item = ( { colors, title, to, icon, selected, setSelected } ) => (
 const SideBar = () => {
   const theme = useTheme()
   const colors = tokens( theme.palette.mode )
+  const { user } = JSON.parse( localStorage.getItem( 'profile' ) )
+  useEffect( () => {
+    console.log( 'user', JSON.parse( localStorage.getItem( 'profile' ) ) )
+  }, [] )
+
   const [ isCollapsed, setIsCollapsed ] = useState( false )
   const [ selected, setSelected ] = useState( 'Dashboard' )
 
@@ -82,7 +87,7 @@ const SideBar = () => {
                 alignItems='center'
               >
                 <img
-                  src={ user }
+                  src={ avatar }
                   alt='profile-user'
                   width='100px'
                   height='100px'
@@ -97,14 +102,14 @@ const SideBar = () => {
                   color={ colors.grey[100] }
                   sx={{ m: '10px 0' }}
                 >
-                  Guangxin Yu
+                  { user?.name }
                 </Typography>
 
                 <Typography
                   variant='h5'
                   color={ colors.greenAccent[500] }
                 >
-                  管理员
+                  { user?.role === 'salesclerk' ? '店员' : '经理' }
                 </Typography>
               </Box>
             </Box>
@@ -193,6 +198,16 @@ const SideBar = () => {
               <Item
                 title='商品统计'
                 to='/commodity/statistics'
+                colors={ colors }
+                selected={ selected }
+                setSelected={ setSelected }
+              />
+            </SubMenu>
+
+            <SubMenu label='营销' icon={ <LocalCafeOutlinedIcon /> }>
+              <Item
+                title='优惠券管理'
+                to='/coupon/management'
                 colors={ colors }
                 selected={ selected }
                 setSelected={ setSelected }

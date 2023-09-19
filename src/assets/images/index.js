@@ -1,7 +1,7 @@
 import logo from './logo.png'
-import user from './user.jpg'
+import avatar from './user.jpg'
 
 export {
   logo,
-  user
+  avatar
 }
